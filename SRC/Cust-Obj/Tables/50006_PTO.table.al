@@ -1,6 +1,8 @@
 table 50006 "PTO Details"
 {
     DataClassification = ToBeClassified;
+    LookupPageId = "Leave Management";
+    DrillDownPageId = "Leave Management";
 
     fields
     {

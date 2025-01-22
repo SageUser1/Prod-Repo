@@ -69,6 +69,8 @@ report 50002 "Customer Report - CompQ"
             column(Billing_To_Period; "Billing To Period") { }
             column(JobPerComp; Job.PercentCompleted) { }
             column(PageHide; PageHide) { }
+            column(SaleLine2Amnt; SaleLine2Amnt) { }
+            column(SaleLine2Qty; SaleLine2.Quantity) { }
             dataitem("Sales Line"; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -95,14 +97,13 @@ report 50002 "Customer Report - CompQ"
                     column(SinvJobDesc; Job.Description) { }
                     column(SaleQty; SalesInvLine.Quantity) { }
                     column(SalLineAmnt; SalesInvLine."Line Amount") { }
-                    column(SaleLine2Amnt; SaleLine2.Amount) { }
-                    column(SaleLine2Qty; SaleLine2.Quantity) { }
                     trigger OnAfterGetRecord()
                     var
                         myInt: Integer;
                     begin
                         IF "Sales Header"."Project Class" = "Sales Header"."Project Class"::CPFF then
                             CurrReport.Skip();
+
                     end;
 
                 }
@@ -121,11 +122,6 @@ report 50002 "Customer Report - CompQ"
                     IF SalesInvLine.FINDSET THEN
                         SalesInvLine.CalcSums(Quantity, "Line Amount");
 
-                    SaleLine2.RESET;
-                    SaleLine2.SetRange("Document Type", "Document Type");
-                    SaleLine2.SetRange("Document No.", "Document No.");
-                    IF SaleLine2.FINDSET THEN
-                        SaleLine2.CalcSums(Quantity, "Line Amount");
                 end;
             }
             trigger OnAfterGetRecord()
@@ -145,6 +141,14 @@ report 50002 "Customer Report - CompQ"
                     Job.RESET;
                     Job.SetRange("No.", SaleLine."Job No.");
                     IF Job.FindFirst() THEN;
+                end;
+
+                SaleLine2.RESET;
+                SaleLine2.SetRange("Document Type", "Document Type");
+                SaleLine2.SetRange("Document No.", "No.");
+                IF SaleLine2.FINDSET THEN BEGIN
+                    SaleLine2.CalcSums(SaleLine2.Quantity, SaleLine2."Line Amount");
+                    SaleLine2Amnt := SaleLine2."Line Amount";
                 end;
             end;
         }
@@ -223,5 +227,6 @@ report 50002 "Customer Report - CompQ"
         Job: Record job;
         PageHide: Boolean;
         QtyHide: Decimal;
+        SaleLine2Amnt: Decimal;
 
 }

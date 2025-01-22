@@ -90,11 +90,22 @@ pageextension 50001 "Resource Card Ext" extends "Resource Card"
                 PromotedIsBig = true;
                 PromotedCategory = Process;
                 image = ShowList;
-                RunObject = page "Leave Management";
-                RunPageLink = "Resource No." = field("No.");
+
+                trigger OnAction()
+                var
+                    PTO: Record "PTO Details";
+                begin
+                    IF Rec."Resource Group No." = 'W2' THEN BEGIN
+                        PTO.Reset();
+                        PTO.SetRange("Resource No.", rec."No.");
+                        page.RunModal(0, PTO);
+                    End Else
+                        Error('You dont have permissions to view this.');
+                end;
             }
         }
     }
+
 
     procedure CreateTimeSheets2()
     var

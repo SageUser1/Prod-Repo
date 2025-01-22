@@ -46,5 +46,8 @@ permissionset 50000 GeneratedPermission
         table "Owing Organisation" = X,
         table "PTO Details" = X,
         page "Leave Management" = X,
-        page "Owing Organisation" = X;
+        page "Owing Organisation" = X,
+        tabledata "Employee Salary Details" = RIMD,
+        table "Employee Salary Details" = X,
+        page "Employee Salary Details" = X;
 }

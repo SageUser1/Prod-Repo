@@ -32,6 +32,16 @@ pageextension 50019 EmployeeCardExt extends "Employee Card"
                 RunObject = page "Leave Management";
                 RunPageLink = "Employee No." = field("No.");
             }
+            action("Salary Details")
+            {
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                image = ShowList;
+                RunObject = page "Employee Salary Details";
+                RunPageLink = "Employee Code" = field("No.");
+            }
         }
     }
 

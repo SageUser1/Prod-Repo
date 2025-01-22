@@ -163,6 +163,7 @@ page 50012 "Leave Management"
         Rec."Available Leaves" := Rec."Opening Balance" + rec."Current Year Balance" - Rec."Current. Utilized";
     end;
 
+
     var
         TempExcelBuffer: Record "Excel Buffer" temporary;
         ExcelImportSucess: Label 'Imported Succesfully.';

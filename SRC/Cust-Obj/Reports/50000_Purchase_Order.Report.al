@@ -11,6 +11,11 @@ report 50000 "Purchase Orde - CompQ"
         {
             DataItemTableView = where("Document Type" = filter("Document Type"::order));
             RequestFilterFields = "No.", "Document Date";
+            column(CompInfoPicture; CompInfo.Picture) { }
+            column(CompInfoName; CompInfo.Name) { }
+            column(CompInfoAdd; CompInfo.Address) { }
+            column(CompInfoAdd2; CompInfo."Address 2") { }
+            column(CompInfopostCode; CompInfo."Post Code") { }
             column(ReportCaptlbl; ReportCaptlbl) { }
             column(DatePrintedlbl; DatePrintedlbl) { }
             column(TransCurrlbl; TransCurrlbl) { }
@@ -67,6 +72,8 @@ report 50000 "Purchase Orde - CompQ"
                 column(Unit_Cost; "Unit Cost") { }
                 column(Line_Amount; "Line Amount") { }
                 column(Unit_of_Measure; "Unit of Measure") { }
+                column(Job_Res__Name; "Job Res. Name") { }
+                column(Job_No_; "Job No.") { }
                 dataitem("Purch. Comment Line"; "Purch. Comment Line")
                 {
                     DataItemLinkReference = "Purchase Line";
@@ -123,6 +130,7 @@ report 50000 "Purchase Orde - CompQ"
     }
 
     var
+        CompInfo: Record "Company Information";
         ReportCaptlbl: Label 'Purchase Order: ';
         ReportCaptlbl2: Label 'CQSITL1003';
         DatePrintedlbl: Label 'Date Printed:';
@@ -148,5 +156,13 @@ report 50000 "Purchase Orde - CompQ"
         Billtolbl: Label 'Bill To:';
         PototalCap: Label 'PO Total Amount';
         Lineno: Integer;
+
+    trigger OnInitReport()
+    var
+        myInt: Integer;
+    begin
+        CompInfo.get();
+        CompInfo.CalcFields(Picture);
+    end;
 
 }

@@ -810,11 +810,13 @@
                                     <TextRun>
                                       <Value>=Fields!Due_Date.Value</Value>
                                       <Style>
-                                        <Format>dd-MM-yyyy</Format>
+                                        <Format>MM-dd-yyyy</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Left</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -906,13 +908,15 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style>
                                         <Format>0.00;(0.00)</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -972,13 +976,15 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style>
                                         <Format>0.00;(0.00)</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -1070,13 +1076,15 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style>
                                         <Format>0.00;(0.00)</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -1168,11 +1176,13 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style />
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -1232,13 +1242,15 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style>
                                         <Format>0.00;(0.00)</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -1332,7 +1344,7 @@
                                     <TextRun>
                                       <Value>=First(Fields!Document_Date.Value)</Value>
                                       <Style>
-                                        <Format>dd-MM-yyyy</Format>
+                                        <Format>MM-dd-yyyy</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -1396,11 +1408,13 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style />
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -1460,11 +1474,13 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value />
+                                      <Value>0.00</Value>
                                       <Style />
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>InvNumbCap</rd:DefaultName>
@@ -2112,7 +2128,9 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Fields!QtyHide.Value</Value>
-                                                    <Style />
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2129,7 +2147,6 @@
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2171,7 +2188,9 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Fields!Unit_Cost.Value</Value>
-                                                    <Style />
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2229,7 +2248,9 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Fields!Line_Amount.Value</Value>
-                                                    <Style />
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2287,7 +2308,9 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Fields!SaleQty.Value + Fields!Quantity.Value</Value>
-                                                    <Style />
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2345,7 +2368,9 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Fields!SalLineAmnt.Value + Fields!Line_Amount.Value</Value>
-                                                    <Style />
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2460,7 +2485,7 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox93">
+                                          <Textbox Name="Textbox20">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -2474,7 +2499,7 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox93</rd:DefaultName>
+                                            <rd:DefaultName>Textbox20</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2525,8 +2550,10 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SaleLine2Amnt.Value</Value>
-                                                    <Style />
+                                                    <Value>= Fields!SaleLine2Amnt.Value</Value>
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2538,14 +2565,10 @@
                                                 <Style>None</Style>
                                               </Border>
                                               <TopBorder>
-                                                <Color>Black</Color>
                                                 <Style>Solid</Style>
-                                                <Width>1pt</Width>
                                               </TopBorder>
                                               <BottomBorder>
-                                                <Color>Black</Color>
                                                 <Style>Solid</Style>
-                                                <Width>1pt</Width>
                                               </BottomBorder>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
@@ -2586,21 +2609,21 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox97">
+                                          <Textbox Name="Textbox18">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SaleQty.Value +Fields!SaleLine2Qty.Value</Value>
+                                                    <Value />
                                                     <Style />
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox97</rd:DefaultName>
+                                            <rd:DefaultName>Textbox18</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2651,8 +2674,10 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SalLineAmnt.Value+Fields!SaleLine2Amnt.Value</Value>
-                                                    <Style />
+                                                    <Value>=last(Fields!SalLineAmnt.Value) + Fields!SaleLine2Amnt.Value</Value>
+                                                    <Style>
+                                                      <Format>#,0.00;(#,0.00)</Format>
+                                                    </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
@@ -2684,7 +2709,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.13433cm</Height>
+                                    <Height>0.24016cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -3063,7 +3088,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.01852cm</Top>
                               <Left>0.25402cm</Left>
-                              <Height>1.93433cm</Height>
+                              <Height>2.04016cm</Height>
                               <Width>25.21652cm</Width>
                               <ZIndex>52</ZIndex>
                               <Style>
@@ -4439,7 +4464,7 @@ Cat Desc</Value>
                                                   <TextRun>
                                                     <Value>=Fields!SINQuantity.Value</Value>
                                                     <Style>
-                                                      <Format>0.00</Format>
+                                                      <Format>#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4470,7 +4495,7 @@ Cat Desc</Value>
                                                   <TextRun>
                                                     <Value>=Fields!SInvUnit_Cost.Value</Value>
                                                     <Style>
-                                                      <Format>0.00</Format>
+                                                      <Format>#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4501,7 +4526,7 @@ Cat Desc</Value>
                                                   <TextRun>
                                                     <Value>=Fields!SInvAmount.Value</Value>
                                                     <Style>
-                                                      <Format>0.00</Format>
+                                                      <Format>#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4590,21 +4615,21 @@ Cat Desc</Value>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox45">
+                                          <Textbox Name="Textbox16">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SINvDescription.Value</Value>
+                                                    <Value />
                                                     <Style />
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox33</rd:DefaultName>
+                                            <rd:DefaultName>Textbox16</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -4624,21 +4649,21 @@ Cat Desc</Value>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox46">
+                                          <Textbox Name="Textbox17">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SInvNo_.Value</Value>
+                                                    <Value />
                                                     <Style />
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox34</rd:DefaultName>
+                                            <rd:DefaultName>Textbox17</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -4703,7 +4728,7 @@ Cat Desc</Value>
                                                   <TextRun>
                                                     <Value>=Sum(Fields!SINQuantity.Value)</Value>
                                                     <Style>
-                                                      <Format>0.00</Format>
+                                                      <Format>#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4730,23 +4755,21 @@ Cat Desc</Value>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="SInvUnit_Cost4">
+                                          <Textbox Name="Textbox10">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(Fields!SInvUnit_Cost.Value)</Value>
-                                                    <Style>
-                                                      <Format>0.00</Format>
-                                                    </Style>
+                                                    <Value />
+                                                    <Style />
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>SInvUnit_Cost</rd:DefaultName>
+                                            <rd:DefaultName>Textbox10</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -4775,7 +4798,7 @@ Cat Desc</Value>
                                                   <TextRun>
                                                     <Value>=Sum(Fields!SInvAmount.Value)</Value>
                                                     <Style>
-                                                      <Format>0.00</Format>
+                                                      <Format>#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -4798,6 +4821,7 @@ Cat Desc</Value>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -5351,6 +5375,18 @@ End Function
         <Field Name="PageHide">
           <DataField>PageHide</DataField>
         </Field>
+        <Field Name="SaleLine2Amnt">
+          <DataField>SaleLine2Amnt</DataField>
+        </Field>
+        <Field Name="SaleLine2AmntFormat">
+          <DataField>SaleLine2AmntFormat</DataField>
+        </Field>
+        <Field Name="SaleLine2Qty">
+          <DataField>SaleLine2Qty</DataField>
+        </Field>
+        <Field Name="SaleLine2QtyFormat">
+          <DataField>SaleLine2QtyFormat</DataField>
+        </Field>
         <Field Name="Line_No_">
           <DataField>Line_No_</DataField>
         </Field>
@@ -5437,18 +5473,6 @@ End Function
         </Field>
         <Field Name="SalLineAmntFormat">
           <DataField>SalLineAmntFormat</DataField>
-        </Field>
-        <Field Name="SaleLine2Amnt">
-          <DataField>SaleLine2Amnt</DataField>
-        </Field>
-        <Field Name="SaleLine2AmntFormat">
-          <DataField>SaleLine2AmntFormat</DataField>
-        </Field>
-        <Field Name="SaleLine2Qty">
-          <DataField>SaleLine2Qty</DataField>
-        </Field>
-        <Field Name="SaleLine2QtyFormat">
-          <DataField>SaleLine2QtyFormat</DataField>
         </Field>
       </Fields>
       <Query>
