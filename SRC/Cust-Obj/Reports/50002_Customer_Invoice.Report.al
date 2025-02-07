@@ -51,7 +51,9 @@ report 50002 "Customer Report - CompQ"
             column(Sell_to_Customer_Name_2; "Sell-to Customer Name 2") { }
             column(Sell_to_Address; "Sell-to Address") { }
             column(Sell_to_Address_2; "Sell-to Address 2") { }
-            column(Sell_to_Post_Code; "Sell-to Post Code") { }
+            column(Sell_to_Post_Code; "Sell-to City" + ',' + "Sell-to Post Code" + ',' + "Sell-to Country/Region Code") { }
+            column(Sell_to_Email; "Sell-to E-Mail") { }
+            column(Sell_to_Phone; "Sell-to Phone No.") { }
             column(External_Document_No_; "External Document No.") { }
             column(Document_Date; "Document Date") { }
             column(Sub__Contract__No_; "Sub. Contract. No.") { }
@@ -110,7 +112,7 @@ report 50002 "Customer Report - CompQ"
                 trigger OnAfterGetRecord()
                 var
                 begin
-                    IF Type = Type::"G/L Account" then
+                    IF QtyHideYes then
                         QtyHide := 0
                     else
                         QtyHide := Quantity;
@@ -133,6 +135,7 @@ report 50002 "Customer Report - CompQ"
                     PageHide := true
                 else
                     PageHide := false;
+                QtyHideYes := false;
                 SaleLine.RESET;
                 SaleLine.SetRange("Document Type", "Document Type");
                 SaleLine.SetRange("Document No.", "No.");
@@ -140,7 +143,9 @@ report 50002 "Customer Report - CompQ"
                 IF SaleLine.FindFirst() THEN begin
                     Job.RESET;
                     Job.SetRange("No.", SaleLine."Job No.");
-                    IF Job.FindFirst() THEN;
+                    IF Job.FindFirst() THEN begin
+                        QtyHideYes := Job."Project Class" = Job."Project Class"::FFP;
+                    end;
                 end;
 
                 SaleLine2.RESET;
@@ -228,5 +233,6 @@ report 50002 "Customer Report - CompQ"
         PageHide: Boolean;
         QtyHide: Decimal;
         SaleLine2Amnt: Decimal;
+        QtyHideYes: Boolean;
 
 }

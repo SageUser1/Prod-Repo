@@ -11,7 +11,7 @@ enum 50002 "Project Class"
     value(2; "CPFF")
     {
     }
-    value(3; "FPPF")
+    value(3; "FFP")
     {
     }
 }

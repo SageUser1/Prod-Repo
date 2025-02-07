@@ -44,6 +44,11 @@ page 50011 "Manager Time Sheet List - 15D"
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies the number of the resource for the time sheet.';
                 }
+                field("Resource Name 2"; Rec."Resource Name 2")
+                {
+                    ApplicationArea = Jobs;
+                    ToolTip = 'Specifies the name of the resource for the time sheet.';
+                }
                 field("Resource Name"; Rec."Resource Name")
                 {
                     ApplicationArea = Jobs;
@@ -239,6 +244,7 @@ page 50011 "Manager Time Sheet List - 15D"
 
     trigger OnOpenPage()
     begin
+        UpdateResourceName2();
         TimeSheetAdminActionsVisible := true;
         if UserSetup.Get(UserId) then
             CurrPage.Editable := UserSetup."Time Sheet Admin.";
@@ -282,6 +288,23 @@ page 50011 "Manager Time Sheet List - 15D"
     [IntegrationEvent(true, false)]
     local procedure OnAfterOnOpenPage(var TimeSheetHeader: Record "Time Sheet Header")
     begin
+    end;
+
+    local procedure UpdateResourceName2()
+    var
+        Res: Record Resource;
+        TimesheetHdr: Record "Time Sheet Header";
+    begin
+        TimesheetHdr.Reset();
+        TimesheetHdr.SetRange("Resource Name 2", '');
+        If TimesheetHdr.findset then
+            repeat
+                IF Res.get(TimesheetHdr."Resource No.") THEN begin
+                    TimesheetHdr."Resource Name 2" := res.Name;
+                    TimesheetHdr.Modify();
+                end;
+            until TimesheetHdr.next = 0;
+
     end;
 }
 
