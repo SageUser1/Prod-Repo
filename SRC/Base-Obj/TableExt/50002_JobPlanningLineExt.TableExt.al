@@ -38,7 +38,8 @@ tableextension 50002 "Job Planning Line Ext" extends "Job Planning Line"
         }
         field(50005; "Update Purchase Order"; Code[20])
         {
-            TableRelation = "Purchase Line"."Document No." where("Document Type" = filter(Order), "Job No." = field("Job No."), "Job Resource No." = field("No."));
+            //TableRelation = "Purchase Line"."Document No." where("Job No. Compq" = field("Job No."), "Job Task No. Compq" = field("Job task No."), "Job Resource No." = field("No."));
+            TableRelation = "Purchase Line"."Document No.";
         }
     }
 

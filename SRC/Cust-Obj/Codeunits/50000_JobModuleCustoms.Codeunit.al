@@ -4,45 +4,52 @@ codeunit 50000 "Job Module Customs"
     var
         Job: Record Job;
         JobPlanningLine2: Record "Job Planning Line";
+        JobPlanningLine3: Record "Job Planning Line";
         PurchaseHeader: Record "Purchase Header";
         PurchLine: Record "Purchase Line";
         Resource: Record Resource;
         PrevJobResouceNo: Code[20];
         JobPostingGroup: Record "Job Posting Group";
         InvoicesCreated: Boolean;
-        Err001: Label 'No lines to create purchase Order.';
+        Err001: Label 'No lines to create purchase document.';
         Err002: Label 'Please Post the existing Order - %1 which is already created for resource - %2.';
-        SuccessText: Label 'Purchase Order created successfully. Do you want to navigate to those Orders?';
+        SuccessText: Label 'Purchase document is created successfully. Do you want to navigate to those Orders?';
     begin
         InvoicesCreated := false;
-        JobPlanningLine.SetCurrentKey("No.");
-        JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
-        JobPlanningLine.SetFilter(Quantity, '<>0');
-        JobPlanningLine.SetFilter("Qty. to Transfer to Purch. Inv", '<>0');
-        IF Not JobPlanningLine.FindFirst() then
+        JobPlanningLine3.SetCurrentKey("No.");
+        JobPlanningLine3.SetRange("Job No.", JobPlanningLine."Job No.");
+        JobPlanningLine3.SetRange("Job Task No.", JobPlanningLine."Job Task No.");
+        JobPlanningLine3.SetRange(Type, JobPlanningLine3.Type::Resource);
+        JobPlanningLine3.SetFilter(Quantity, '<>0');
+        JobPlanningLine3.SetFilter("Qty. to Transfer to Purch. Inv", '<>0');
+        IF Not JobPlanningLine3.FindFirst() then
             Error(Err001);
 
-        JobPlanningLine.SetCurrentKey("No.");
-        JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
-        JobPlanningLine.SetFilter(Quantity, '<>0');
-        JobPlanningLine.SetFilter("Qty. to Transfer to Purch. Inv", '<>0');
-        JobPlanningLine.SetFilter("Update Purchase Order", '=%1', '');
-        if JobPlanningLine.FindSet() then begin
+        JobPlanningLine3.SetCurrentKey("No.");
+        JobPlanningLine3.SetRange("Job No.", JobPlanningLine."Job No.");
+        JobPlanningLine3.SetRange("Job Task No.", JobPlanningLine."Job Task No.");
+        JobPlanningLine3.SetRange(Type, JobPlanningLine.Type::Resource);
+        JobPlanningLine3.SetFilter(Quantity, '<>0');
+        JobPlanningLine3.SetFilter("Qty. to Transfer to Purch. Inv", '<>0');
+        JobPlanningLine3.SetFilter("Update Purchase Order", '=%1', '');
+        if JobPlanningLine3.FindSet() then begin
             repeat
-                if PrevJobResouceNo <> JobPlanningLine."No." then begin
-                    PrevJobResouceNo := JobPlanningLine."No.";
-                    Job.Get(JobPlanningLine."Job No.");
-                    if (Resource.Get(JobPlanningLine."No.")) and (Resource."Sub-Contracting Resource") then begin
-                        if PurchLine.Get(PurchLine."Document Type"::Order, JobPlanningLine."Subcon. Invoice No.", JobPlanningLine."Subcon. Invoice Line No.") then
-                            Error(Err002, JobPlanningLine."Subcon. Invoice No.", PrevJobResouceNo);
-                        if CreatePurchaseHeader(Job, WorkDate(), JobPlanningLine, PurchaseHeader, Resource) then begin
+                if PrevJobResouceNo <> JobPlanningLine3."No." then begin
+                    PrevJobResouceNo := JobPlanningLine3."No.";
+                    Job.Get(JobPlanningLine3."Job No.");
+                    if (Resource.Get(JobPlanningLine3."No.")) and (Resource."Sub-Contracting Resource") then begin
+                        if PurchLine.Get(PurchLine."Document Type"::Order, JobPlanningLine3."Subcon. Invoice No.", JobPlanningLine3."Subcon. Invoice Line No.") then
+                            Error(Err002, JobPlanningLine3."Subcon. Invoice No.", PrevJobResouceNo);
+                        if PurchLine.Get(PurchLine."Document Type"::Invoice, JobPlanningLine3."Subcon. Invoice No.", JobPlanningLine3."Subcon. Invoice Line No.") then
+                            Error(Err002, JobPlanningLine3."Subcon. Invoice No.", PrevJobResouceNo);
+                        if CreatePurchaseHeader(Job, WorkDate(), JobPlanningLine3, PurchaseHeader, Resource) then begin
                             InvoicesCreated := true;
                             JobPostingGroup.Get(Job."Job Posting Group");
                             JobPostingGroup.TestField("Sub-Contracting Accrual cost");
-                            CreateFirstPurchaseLine(JobPlanningLine, PurchaseHeader);
+                            CreateFirstPurchaseLine(JobPlanningLine3, PurchaseHeader);
                             JobPlanningLine2.Reset();
-                            JobPlanningLine2.CopyFilters(JobPlanningLine);
-                            JobPlanningLine2.SetRange("No.", JobPlanningLine."No.");
+                            JobPlanningLine2.CopyFilters(JobPlanningLine3);
+                            JobPlanningLine2.SetRange("No.", JobPlanningLine3."No.");
                             if JobPlanningLine2.FindSet() then
                                 repeat
                                     CreatePurchaseLine(JobPlanningLine2, PurchaseHeader, Job, JobPostingGroup);
@@ -50,26 +57,28 @@ codeunit 50000 "Job Module Customs"
                         end;
                     end;
                 end;
-            until JobPlanningLine.Next() = 0;
+            until JobPlanningLine3.Next() = 0;
             if InvoicesCreated then begin
                 if Confirm(SuccessText, false) then begin
-                    ShowCreatedPurchaseInvoices(JobPlanningLine);
+                    ShowCreatedPurchaseInvoices(JobPlanningLine3);
                 end else
                     exit;
             end else
                 Error(Err001);
         end else BEGIN
             //Error(Err001);
-            JobPlanningLine.Reset();
-            JobPlanningLine.SetCurrentKey("No.");
-            JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
-            JobPlanningLine.SetFilter(Quantity, '<>0');
-            JobPlanningLine.SetFilter("Qty. to Transfer to Purch. Inv", '<>0');
-            JobPlanningLine.SetFilter("Update Purchase Order", '<>%1', '');
-            if JobPlanningLine.FindSet() then Begin
+            JobPlanningLine3.Reset();
+            JobPlanningLine3.SetCurrentKey("No.");
+            JobPlanningLine3.SetRange("Job No.", JobPlanningLine."Job No.");
+            JobPlanningLine3.SetRange("Job Task No.", JobPlanningLine."Job Task No.");
+            JobPlanningLine3.SetRange(Type, JobPlanningLine3.Type::Resource);
+            JobPlanningLine3.SetFilter(Quantity, '<>0');
+            JobPlanningLine3.SetFilter("Qty. to Transfer to Purch. Inv", '<>0');
+            JobPlanningLine3.SetFilter("Update Purchase Order", '<>%1', '');
+            if JobPlanningLine3.FindSet() then Begin
                 repeat
-                    UpdatePurchaseLine(JobPlanningLine);
-                until JobPlanningLine.Next = 0;
+                    UpdatePurchaseLine(JobPlanningLine3);
+                until JobPlanningLine3.Next = 0;
                 Message('Updated.');
             end;
         End;
@@ -78,11 +87,25 @@ codeunit 50000 "Job Module Customs"
     local procedure CreatePurchaseHeader(Job: Record Job; PostingDate: Date; JobPlanningLine: Record "Job Planning Line"; var PurchaseHeader: Record "Purchase Header"; Resource: Record Resource): Boolean
     var
         PurchaseSetup: Record "Purchases & Payables Setup";
+        SelectDocType: Label '&Order,&Invoice';
+        DefaultOption: Integer;
+        Selection: Integer;
     begin
         Clear(PurchaseHeader);
         PurchaseSetup.Get();
         PurchaseHeader.Init();
-        PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Order;
+        if DefaultOption = 0 then
+            DefaultOption := 1;
+        Selection := StrMenu(SelectDocType, DefaultOption);
+        case Selection of
+            0:
+                exit;
+            1:
+                PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Order;
+            2:
+                PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Invoice;
+        end;
+
         PurchaseSetup.TestField("Invoice Nos.");
         PurchaseHeader."Posting Date" := PostingDate;
         PurchaseHeader.Insert(true);
@@ -129,7 +152,7 @@ codeunit 50000 "Job Module Customs"
         PurchaseLine: Record "Purchase Line";
     begin
         PurchaseLine.Reset();
-        PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::Order);
+        //PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::Order);
         PurchaseLine.SetRange("Document No.", JobPlanningLine."Update Purchase Order");
         PurchaseLine.SetRange("Job Resource No.", JobPlanningLine."No.");
         PurchaseLine.SetRange("Job No.", JobPlanningLine."Job No.");
@@ -158,7 +181,10 @@ codeunit 50000 "Job Module Customs"
         PurchaseLine.Validate("Location Code", JobPlanningLine."Location Code");
         PurchaseLine.Validate("Variant Code", JobPlanningLine."Variant Code");
         PurchaseLine.Validate("Job Resource No.", JobPlanningLine."No.");
-        PurchaseLine.Validate("Job No.", JobPlanningLine."Job No.");
+        //PurchaseLine.Validate("Job No.", JobPlanningLine."Job No.");
+        PurchaseLine.Validate("Job No. Compq", JobPlanningLine."Job No.");
+        PurchaseLine.Validate("Job Task No. Compq", JobPlanningLine."Job Task No.");
+        PurchaseLine.Validate("Job Line No. Compq", JobPlanningLine."Line No.");
         if PurchaseLine.Type <> PurchaseLine.Type::" " then begin
             PurchaseLine.Validate("Unit of Measure Code", JobPlanningLine."Unit of Measure Code");
             PurchaseLine.Validate(Quantity, JobPlanningLine."Qty. to Transfer to Purch. Inv");
@@ -202,9 +228,17 @@ codeunit 50000 "Job Module Customs"
     procedure ShowCreatedPurchaseInvoices(JobPlanningLine: Record "Job Planning Line")
     var
         PurchaseHeader: Record "Purchase Header";
+        PurchaseLine: Record "Purchase Line";
         JobPlanningLine1: Record "Job Planning Line";
         PrevInvoiceNo: Code[20];
     begin
+        PurchaseLine.RESET;
+        PurchaseLine.SetRange("Job No. Compq", JobPlanningLine."Job No.");
+        PurchaseLine.SetRange("Job Task No. Compq", JobPlanningLine."Job Task No.");
+        PurchaseLine.SetRange("Job Line No. Compq", JobPlanningLine."Line No.");
+        IF PurchaseLine.findset THEN
+            Page.RunModal(0, PurchaseLine);
+        /*
         JobPlanningLine1.Reset();
         JobPlanningLine1.SetCurrentKey("Subcon. Invoice No.", "Subcon. Invoice Line No.");
         JobPlanningLine1.SetRange("Job No.", JobPlanningLine."Job No.");
@@ -214,13 +248,16 @@ codeunit 50000 "Job Module Customs"
             repeat
                 if PrevInvoiceNo <> JobPlanningLine1."Subcon. Invoice No." then begin
                     PrevInvoiceNo := JobPlanningLine1."Subcon. Invoice No.";
-                    if PurchaseHeader.Get(PurchaseHeader."Document Type"::Order, PrevInvoiceNo) then
+                    //if PurchaseHeader.Get(PurchaseHeader."Document Type", PrevInvoiceNo) then
+                    PurchaseHeader.Reset();
+                    PurchaseHeader.SetRange("No.", PrevInvoiceNo);
+                    IF PurchaseHeader.FindFirst then
                         PurchaseHeader.Mark(true);
                 end;
             until JobPlanningLine1.Next() = 0;
             PurchaseHeader.MarkedOnly(true);
             Page.RunModal(0, PurchaseHeader);
-        end;
+    end;            */
     end;
 
 }

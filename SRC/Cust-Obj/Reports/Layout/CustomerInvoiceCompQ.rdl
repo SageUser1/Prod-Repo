@@ -5312,6 +5312,12 @@ End Function
         <Field Name="Sell_to_Post_Code">
           <DataField>Sell_to_Post_Code</DataField>
         </Field>
+        <Field Name="Sell_to_Email">
+          <DataField>Sell_to_Email</DataField>
+        </Field>
+        <Field Name="Sell_to_Phone">
+          <DataField>Sell_to_Phone</DataField>
+        </Field>
         <Field Name="External_Document_No_">
           <DataField>External_Document_No_</DataField>
         </Field>

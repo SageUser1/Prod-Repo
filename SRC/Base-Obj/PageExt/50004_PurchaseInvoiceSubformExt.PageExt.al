@@ -8,16 +8,22 @@ pageextension 50004 "Purch. Invoice Subform Ext" extends "Purch. Invoice Subform
             {
                 ApplicationArea = all;
             }
+
         }
-        modify("Job No.")
+        addbefore("Job Task No.")
         {
-            Visible = true;
-            Editable = true;
-        }
-        modify("Job Task No.")
-        {
-            Visible = true;
-            Editable = true;
+            field("Job No. Compq"; Rec."Job No. Compq")
+            {
+                ApplicationArea = all;
+            }
+            field("Job Task No. Compq"; Rec."Job Task No. Compq")
+            {
+                ApplicationArea = all;
+            }
+            field("Job Line No. Compq"; Rec."Job Line No. Compq")
+            {
+                ApplicationArea = all;
+            }
         }
 
         modify(Description)

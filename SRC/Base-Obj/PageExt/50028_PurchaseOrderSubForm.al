@@ -13,15 +13,22 @@ pageextension 50028 PurchOrdSubformExt extends "Purchase Order Subform"
             {
                 ApplicationArea = all;
             }
-            field("Job No"; Rec."Job No.")
-            {
-                ApplicationArea = all;
-            }
             field("Job Name"; Rec."Job Name")
             {
                 ApplicationArea = all;
             }
-            field("Job TaskNo."; Rec."Job Task No.")
+        }
+        addbefore("Job Task No.")
+        {
+            field("Job No. Compq"; Rec."Job No. Compq")
+            {
+                ApplicationArea = all;
+            }
+            field("Job Task No. Compq"; Rec."Job Task No. Compq")
+            {
+                ApplicationArea = all;
+            }
+            field("Job Line No. Compq"; Rec."Job Line No. Compq")
             {
                 ApplicationArea = all;
             }

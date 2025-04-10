@@ -65,6 +65,47 @@ codeunit 50001 BaseCUSubsc
             until JobPlanningLine.Next() = 0;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnRecreatePurchLinesOnBeforeTempPurchLineInsert', '', false, false)]
+    local procedure OnRecreatePurchLinesOnBeforeTempPurchLineInsert(var TempPurchaseLine: Record "Purchase Line" temporary; PurchaseLine: Record "Purchase Line")
+    begin
+        TempPurchaseLine.Validate("Job No.", PurchaseLine."Job No.");
+        TempPurchaseLine.Validate("Job No. Compq", PurchaseLine."Job No. Compq");
+        TempPurchaseLine.Validate("Job Task No. Compq", PurchaseLine."Job Task No. Compq");
+        TempPurchaseLine.Validate("Job Line No. Compq", PurchaseLine."Job Line No. Compq");
+        TempPurchaseLine.Validate("Job Task No.", PurchaseLine."Job Task No.");
+        TempPurchaseLine.Validate("Job Resource No.", PurchaseLine."Job Resource No.");
+        TempPurchaseLine.Validate("Direct Unit Cost", PurchaseLine."Direct Unit Cost");
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnAfterTransferSavedFields', '', false, false)]
+    local procedure OnAfterTransferSavedFields(var DestinationPurchaseLine: Record "Purchase Line"; SourcePurchaseLine: Record "Purchase Line")
+    begin
+        DestinationPurchaseLine.Validate("Job No.", SourcePurchaseLine."Job No.");
+        DestinationPurchaseLine.Validate("Job No. Compq", SourcePurchaseLine."Job No. Compq");
+        DestinationPurchaseLine.Validate("Job Task No. Compq", SourcePurchaseLine."Job Task No. Compq");
+        DestinationPurchaseLine.Validate("Job Line No. Compq", SourcePurchaseLine."Job Line No. Compq");
+        DestinationPurchaseLine.Validate("Job Task No.", SourcePurchaseLine."Job Task No.");
+        DestinationPurchaseLine.Validate("Job Resource No.", SourcePurchaseLine."Job Resource No.");
+        DestinationPurchaseLine.Validate("Direct Unit Cost", SourcePurchaseLine."Direct Unit Cost");
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Line", 'OnAfterDeleteEvent', '', false, false)]
+    procedure OnAfterDeleteEvent(var Rec: Record "Purchase Line")
+    var
+        JobTaskLine: Record "Job Planning Line";
+    begin
+        JobTaskLine.RESET;
+        JobTaskLine.SetRange("Job No.", Rec."Job No. Compq");
+        JobTaskLine.SetRange("Job Task No.", Rec."Job Task No. Compq");
+        JobTaskLine.SetRange("Line No.", Rec."Job Line No. Compq");
+        IF JobTaskLine.FindLast() then
+            IF Rec."Quantity Invoiced" = 0 Then Begin
+                JobTaskLine."Qty. Transferred to Purch. Inv" -= Rec.Quantity;
+                JobTaskLine."Qty. to Transfer to Purch. Inv" += Rec.Quantity;
+                JobTaskLine.Modify();
+            End
+    end;
+
     var
         GLDocumentNo: Code[20];
 }

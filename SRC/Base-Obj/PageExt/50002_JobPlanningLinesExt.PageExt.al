@@ -37,30 +37,31 @@ pageextension 50002 "Job Planning Lines Ext" extends "Job Planning Lines"
     {
         modify(CreatePurchaseOrder)
         {
-            Visible = false;
+            //Visible = false;
+            Caption = 'Base Action - Create Purchase Order';
         }
         addafter("Create &Sales Invoice")
         {
             action("Create &Purchase Order")
             {
                 ApplicationArea = Jobs;
-                Caption = 'Create/Update &Purchase Order';
+                Caption = 'Create/Update &Purchase Document';
                 Ellipsis = true;
                 Image = JobPurchaseInvoice;
                 Promoted = true;
                 PromotedCategory = Process;
-                ToolTip = 'Use a batch job to help you create purchase invoices for the involved job tasks.';
+                ToolTip = 'Use a batch job to help you create purchase order/ invoices for the involved job tasks.';
 
                 trigger OnAction()
                 begin
-                    CreatePurchaseInvoice();
+                    CreatePurchaseInvoice(rec);
                 end;
             }
 
             action("Show Purchase Order")
             {
                 ApplicationArea = Jobs;
-                Caption = 'Show Purchase Order';
+                Caption = 'Show Purchase Document';
                 Ellipsis = true;
                 Image = ShowList;
                 Promoted = true;
@@ -76,14 +77,14 @@ pageextension 50002 "Job Planning Lines Ext" extends "Job Planning Lines"
         }
     }
 
-    local procedure CreatePurchaseInvoice()
+    local procedure CreatePurchaseInvoice(JobPlanningLineLpar: Record "Job Planning Line")
     var
         JobPlanningLine: Record "Job Planning Line";
         JobModuleCustoms: Codeunit "Job Module Customs";
     begin
-        Rec.TestField("Line No.");
+        JobPlanningLineLpar.TestField("Line No.");
         Clear(JobPlanningLine);
-        JobPlanningLine.Copy(Rec);
+        JobPlanningLine.Copy(JobPlanningLineLpar);
         JobModuleCustoms.CreatePurchaseInvoice(JobPlanningLine);
     end;
 }
